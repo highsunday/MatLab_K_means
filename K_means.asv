@@ -1,0 +1,22 @@
+classdef K_means
+    
+    properties
+        Property1
+    end
+
+    methods (Static)
+        function outputArg = Fun(inputArg1,inputArg2)
+            %FUN1 Summary of this function goes here
+            %   Detailed explanation goes here
+            outputArg = (inputArg1 + inputArg2)/2;
+        end
+        function 2d_DataFrame = Output_2d_df(col1='SepalLengthCm',col2='SepalWidthCm')
+            %FUN1 Summary of this function goes here
+            %   Detailed explanation goes here
+            DataFrame = readtable ('data/Iris.csv')	
+            2d_DataFrame= DataFrame(:,{col1,col2})
+
+        end
+    end
+end
+
