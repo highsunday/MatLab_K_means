@@ -13,6 +13,16 @@ classdef K_means
         function Plot_2d_df(data)
            scatter(data(:,1),data(:,2))
         end
+        
+        function data = Output_3d_df(col1,col2,col3)
+            DataFrame = readtable ('data/Iris.csv')		% 將 data.csv 的內容讀到矩陣 A	
+            data= cell2mat(table2cell(DataFrame(:,{col1,col2,col3})))
+        end
+        
+         function Plot_3d_df(data)
+           plot3(data(:,1),data(:,2),data(:,3),'o')
+         end
+       
     end
 end
 
