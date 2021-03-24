@@ -1,9 +1,23 @@
-classdef K_means
+classdef K_means < handle
     
     properties
-        Property1
+        %k 分群個數 ; points:群心 ; cluster : 對群進行歸類
+        k
+        points
+        cluster
     end
-
+     methods
+            function obj = K_means(k)   %建構函式，函式類名一致，完成類中變數的初始化
+                obj.k = k;     
+            end
+            
+            function obj=initialPoints(obj,data)
+                %隨機選取k個點:從資料點中選取(可能重複)
+                r = randi([1 length(data)],1,obj.k);
+                disp(data(r,:));
+                obj.points=data(r,:); 
+            end
+    end
     methods (Static)
         function data = Output_2d_df(col1,col2)
             DataFrame = readtable ('data/Iris.csv')	;	% 將 data.csv 的內容讀到矩陣 A	
@@ -20,13 +34,6 @@ classdef K_means
            hold on
            scatter(points(:,1),points(:,2),'r','x')
          end
-        
-        function points=initialPoints(k,data)
-            %隨機選取k個點:從資料點中選取(可能重複)
-            r = randi([1 length(data)],1,k);
-            points=data(r,:);
-            
-        end
         
         function data = Output_3d_df(col1,col2,col3)
             DataFrame = readtable ('data/Iris.csv')	;	;% 將 data.csv 的內容讀到矩陣 A	
