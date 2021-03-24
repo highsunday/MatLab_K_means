@@ -9,4 +9,5 @@ data=K_means.Output_2d_df('SepalLengthCm','SepalWidthCm');
 %%%
 
 run.initialPoints(data);
-K_means.Plot_2d_with_points(data,run.points)
+%K_means.Plot_2d_with_points(data,run.points)
+res=run.Clustering(data);

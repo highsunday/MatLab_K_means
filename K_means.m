@@ -14,8 +14,37 @@ classdef K_means < handle
             function obj=initialPoints(obj,data)
                 %隨機選取k個點:從資料點中選取(可能重複)
                 r = randi([1 length(data)],1,obj.k);
-                disp(data(r,:));
+                %disp(data(r,:));
                 obj.points=data(r,:); 
+            end
+            
+            function res=Clustering(obj,data)
+                %對所有點進行歸類
+                cluster_index=zeros(150,1);
+                for i= 1:length(data)
+                    %fprintf('x:%d ,y:%d\n',data(i,1),data(i,2))
+                    shortDis=realmax;
+                    shortIndex=-1;
+                    for j =1: obj.k
+                        %fprintf('%d ,%d ||| %d ,%d \n',data(i,1),data(i,2),obj.points(j,1),obj.points(j,2))
+                        dis=(data(i,1)-obj.points(j,1))^2+((data(i,2)-obj.points(j,2)))^2;
+                        %fprintf('distance is : %d \n',dis)
+                        if(dis<shortDis)
+                            shortDis=dis;
+                            shortIndex=j;
+                            %fprintf('xxxshortDis : %d \n',shortDis)
+                        end
+                    end
+                    cluster_index(i,1)=shortIndex;
+                    %fprintf('short distance is : %d \n',shortDis)
+                    %fprintf('short index is : %d \n',shortIndex)
+                    %fprintf('======================d \n')
+                end
+                %disp(cluster_index);
+                %res=cluster_index;
+                res=[data cluster_index];
+                %disp(res);
+                %disp(obj.k,cluster)
             end
     end
     methods (Static)
@@ -27,6 +56,8 @@ classdef K_means < handle
         function Plot_2d_df(data)
            scatter(data(:,1),data(:,2))
         end
+        
+        
         
          function Plot_2d_with_points(data,points)
             % disp(points)
