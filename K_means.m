@@ -14,6 +14,13 @@ classdef K_means
            scatter(data(:,1),data(:,2))
         end
         
+         function Plot_2d_with_points(data,points)
+            % disp(points)
+           scatter(data(:,1),data(:,2),'b','.')
+           hold on
+           scatter(points(:,1),points(:,2),'r','x')
+         end
+        
         function points=initialPoints(k,data)
             %隨機選取k個點:從資料點中選取(可能重複)
             r = randi([1 length(data)],1,k);
@@ -22,7 +29,7 @@ classdef K_means
         end
         
         function data = Output_3d_df(col1,col2,col3)
-            DataFrame = readtable ('data/Iris.csv')		;% 將 data.csv 的內容讀到矩陣 A	
+            DataFrame = readtable ('data/Iris.csv')	;	;% 將 data.csv 的內容讀到矩陣 A	
             data= cell2mat(table2cell(DataFrame(:,{col1,col2,col3})));
         end
         
