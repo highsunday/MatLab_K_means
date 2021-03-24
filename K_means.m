@@ -5,10 +5,21 @@ classdef K_means < handle
         k
         points
         cluster
+        axis_x
+        axis_y
+        image_count
     end
      methods
-            function obj = K_means(k)   %建構函式，函式類名一致，完成類中變數的初始化
-                obj.k = k;     
+            function obj = K_means(k,axis_x,axis_y)   %建構函式，函式類名一致，完成類中變數的初始化
+                obj.k = k; 
+                obj.axis_x = axis_x; 
+                obj.axis_y = axis_y; 
+                obj.image_count = 0; 
+            end
+            
+            function data = Output_2d_df(obj)
+                DataFrame = readtable ('data/Iris.csv')	;	% 將 data.csv 的內容讀到矩陣 A	
+                data= cell2mat(table2cell(DataFrame(:,{obj.axis_x,obj.axis_y})));
             end
             
             function obj=initialPoints(obj,data)
@@ -45,7 +56,11 @@ classdef K_means < handle
                    scatter(data.x(tf),data.y(tf),'o')
                    hold on
                 end
+                obj.image_count= obj.image_count+1;
                 scatter(obj.points(:,1),obj.points(:,2),'r','x')
+                xlabel(obj.axis_x)
+                ylabel(obj.axis_y)
+                title(['K-means : iteration ',num2str(obj.image_count)])
             end
             
              function recalculate_points(obj,data)         
@@ -53,23 +68,13 @@ classdef K_means < handle
                     fprintf('for cluster %d',i)
                    tf = (data.group == i);
                    disp([mean(data.x(tf)),mean(data.y(tf))])
-                   obj.points(i,1)=mean(data.x(tf))
-                   obj.points(i,2)=mean(data.y(tf))
+                   obj.points(i,1)=mean(data.x(tf));
+                   obj.points(i,2)=mean(data.y(tf));
                 end
             end
     end
     methods (Static)
-        function data = Output_2d_df(col1,col2)
-            DataFrame = readtable ('data/Iris.csv')	;	% 將 data.csv 的內容讀到矩陣 A	
-            data= cell2mat(table2cell(DataFrame(:,{col1,col2})));
-        end
-        
-        function Plot_2d_with_points(data,points)
-            % disp(points)
-           scatter(data(:,1),data(:,2),'b','.')
-           hold on
-           scatter(points(:,1),points(:,2),'r','x')
-         end
+
         
         function data = Output_3d_df(col1,col2,col3)
             DataFrame = readtable ('data/Iris.csv')	;% 將 data.csv 的內容讀到矩陣 A	
