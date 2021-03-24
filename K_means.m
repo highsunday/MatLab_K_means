@@ -34,16 +34,28 @@ classdef K_means < handle
                     cluster_index(i,1)=shortIndex;
                 end
                 res=[data cluster_index];
-                res=array2table(res,'VariableNames',{'x','y','group'})
+                res=array2table(res,'VariableNames',{'x','y','group'});
             end
             
-            function Plot_2d_df(obj,data)         
+            
+            function Plot_2d_df(obj,data)    
+                hold off
                 for i=1:obj.k
                    tf = (data.group == i);
                    scatter(data.x(tf),data.y(tf),'o')
                    hold on
                 end
                 scatter(obj.points(:,1),obj.points(:,2),'r','x')
+            end
+            
+             function recalculate_points(obj,data)         
+                for i=1:obj.k
+                    fprintf('for cluster %d',i)
+                   tf = (data.group == i);
+                   disp([mean(data.x(tf)),mean(data.y(tf))])
+                   obj.points(i,1)=mean(data.x(tf))
+                   obj.points(i,2)=mean(data.y(tf))
+                end
             end
     end
     methods (Static)

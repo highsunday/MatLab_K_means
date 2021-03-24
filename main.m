@@ -1,16 +1,34 @@
 
-run=K_means(5);
-data=K_means.Output_2d_df('SepalLengthCm','SepalWidthCm');
+%========CFG========
+K=3
+iteration=10
+%===================
 
-%%%
+
+
+
+% initial
+run=K_means(K);
+data=K_means.Output_2d_df('SepalLengthCm','SepalWidthCm');
+run.initialPoints(data);
+
+for i=1:iteration
+    %分群
+    res=run.Clustering(data);
+    run.Plot_2d_df(res);
+
+    % 重新定位群心
+    run.recalculate_points(res);
+    run.Plot_2d_df(res);
+end
+
+%%% 3d case
 %K_means.Plot_2d_df(data)
 %data=K_means.Output_3d_df('SepalLengthCm','SepalWidthCm','PetalLengthCm')
 %K_means.Plot_3d_df(data)
 %%%
 
-run.initialPoints(data);
-%K_means.Plot_2d_with_points(data,run.points)
-res=run.Clustering(data);
 
-run.Plot_2d_df(res);
+
+
 
