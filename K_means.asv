@@ -20,7 +20,7 @@ classdef K_means < handle
             
             function res=Clustering(obj,data)
                 %對所有點進行歸類
-                cluster_index=[];
+                cluster_index=zeros(150,1);
                 for i= 1:length(data)
                     %fprintf('x:%d ,y:%d\n',data(i,1),data(i,2))
                     shortDis=realmax;
@@ -35,16 +35,26 @@ classdef K_means < handle
                             %fprintf('xxxshortDis : %d \n',shortDis)
                         end
                     end
-                    cluster_index(end+1)=shortIndex;
+                    cluster_index(i,1)=shortIndex;
                     %fprintf('short distance is : %d \n',shortDis)
                     %fprintf('short index is : %d \n',shortIndex)
                     %fprintf('======================d \n')
                 end
-                disp(cluster_index);
-                %out=cluster_index;
-                res=[data cluster_index'];
-                disp(res);
+                %disp(cluster_index);
+                %res=cluster_index;
+                res=[data cluster_index];
+                res=array2table(res,'VariableNames',{'x','y','group'})
+                %disp(res);
                 %disp(obj.k,cluster)
+            end
+            
+            function out = Plot_2d_df(obj,data)
+                %scatter(data(:,1),data(:,2),'.')
+                for i = 1:obj.k
+                   fprintf("\n%d :",i)
+                   tf = (data.group == false);
+                end
+                out=0
             end
     end
     methods (Static)
@@ -53,11 +63,9 @@ classdef K_means < handle
             data= cell2mat(table2cell(DataFrame(:,{col1,col2})));
         end
         
-        function Plot_2d_df(data)
-           scatter(data(:,1),data(:,2))
-        end
-        
-        
+        %function Plot_2d_df(data)
+        %   scatter(data(:,1),data(:,2))
+        %end
         
          function Plot_2d_with_points(data,points)
             % disp(points)
@@ -67,7 +75,7 @@ classdef K_means < handle
          end
         
         function data = Output_3d_df(col1,col2,col3)
-            DataFrame = readtable ('data/Iris.csv')	;	;% 將 data.csv 的內容讀到矩陣 A	
+            DataFrame = readtable ('data/Iris.csv')	;% 將 data.csv 的內容讀到矩陣 A	
             data= cell2mat(table2cell(DataFrame(:,{col1,col2,col3})));
         end
         

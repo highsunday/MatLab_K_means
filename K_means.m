@@ -22,29 +22,28 @@ classdef K_means < handle
                 %對所有點進行歸類
                 cluster_index=zeros(150,1);
                 for i= 1:length(data)
-                    %fprintf('x:%d ,y:%d\n',data(i,1),data(i,2))
                     shortDis=realmax;
                     shortIndex=-1;
                     for j =1: obj.k
-                        %fprintf('%d ,%d ||| %d ,%d \n',data(i,1),data(i,2),obj.points(j,1),obj.points(j,2))
                         dis=(data(i,1)-obj.points(j,1))^2+((data(i,2)-obj.points(j,2)))^2;
-                        %fprintf('distance is : %d \n',dis)
                         if(dis<shortDis)
                             shortDis=dis;
                             shortIndex=j;
-                            %fprintf('xxxshortDis : %d \n',shortDis)
                         end
                     end
                     cluster_index(i,1)=shortIndex;
-                    %fprintf('short distance is : %d \n',shortDis)
-                    %fprintf('short index is : %d \n',shortIndex)
-                    %fprintf('======================d \n')
                 end
-                %disp(cluster_index);
-                %res=cluster_index;
                 res=[data cluster_index];
-                %disp(res);
-                %disp(obj.k,cluster)
+                res=array2table(res,'VariableNames',{'x','y','group'})
+            end
+            
+            function Plot_2d_df(obj,data)         
+                for i=1:obj.k
+                   tf = (data.group == i);
+                   scatter(data.x(tf),data.y(tf),'o')
+                   hold on
+                end
+                scatter(obj.points(:,1),obj.points(:,2),'r','x')
             end
     end
     methods (Static)
@@ -53,13 +52,7 @@ classdef K_means < handle
             data= cell2mat(table2cell(DataFrame(:,{col1,col2})));
         end
         
-        function Plot_2d_df(data)
-           scatter(data(:,1),data(:,2))
-        end
-        
-        
-        
-         function Plot_2d_with_points(data,points)
+        function Plot_2d_with_points(data,points)
             % disp(points)
            scatter(data(:,1),data(:,2),'b','.')
            hold on
@@ -67,7 +60,7 @@ classdef K_means < handle
          end
         
         function data = Output_3d_df(col1,col2,col3)
-            DataFrame = readtable ('data/Iris.csv')	;	;% 將 data.csv 的內容讀到矩陣 A	
+            DataFrame = readtable ('data/Iris.csv')	;% 將 data.csv 的內容讀到矩陣 A	
             data= cell2mat(table2cell(DataFrame(:,{col1,col2,col3})));
         end
         
