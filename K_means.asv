@@ -88,9 +88,10 @@ classdef K_means < handle
                        hold on
                     end
                     obj.image_count= obj.image_count+1;
-                    scatter(obj.points(:,1),obj.points(:,2),'r','x')
+                    scatter(obj.points(:,1),obj.points(:,2),obj.points(:,3),'r','x')
                     xlabel(obj.axis_x)
                     ylabel(obj.axis_y)
+                    zlabel(obj.axis_z)
                     title(['K-means : iteration ',num2str(obj.image_count)])
                 else
                      for i=1:obj.k
@@ -100,9 +101,7 @@ classdef K_means < handle
                     end
                     obj.image_count= obj.image_count+1;
                     scatter3(obj.points(:,1),obj.points(:,2),obj.points(:,3),'r','x')
-                    view(-120, 20)
                     xlabel(obj.axis_x)
-                    ylabel(obj.axis_y)
                     zlabel(obj.axis_z)
                     title(['K-means : iteration ',num2str(obj.image_count)])
                 end

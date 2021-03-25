@@ -2,35 +2,40 @@
 %========CFG========
 K=4
 iteration=100
-is_2D=true % 3D為false
+is_2D=false % 3D為false
 %SepalLengthCm,SepalWidthCm,PetalLengthCm,PetalWidthCm
-col1='SepalLengthCm'
+col1='PetalLengthCm'
 col2='PetalWidthCm'
+col3='SepalWidthCm'
 %===================
 
-
 % initial
-run=K_means(K);
-data=K_means.Output_2d_df('SepalLengthCm','PetalWidthCm');
-run.initialPoints(data);
+if is_2D
+    run=K_means(K,col1,col2);
+    data=run.Output_2d_df();
+    run.initialPoints(data);
 
-for i=1:iteration
     %分群
     res=run.Clustering(data);
     run.Plot_2d_df(res);
-    
-    last_points=run.points;
-	drawnow				% 立即作圖
-    pause(1)
-    
-    % 重新定位群心
-    run.recalculate_points(res);
-    run.Plot_2d_df(res);
-    
-    if(run.points==last_points)
-        break
+
+    for i=1:iteration
+        last_points=run.points;
+        drawnow				% 立即作圖
+        pause(1)
+
+        % 重新定位群心
+        run.recalculate_points(res);
+        run.Plot_2d_df(res);
+        res=run.Clustering(data);
+        if(run.points==last_points)
+            break
+        end
     end
+else
+    run=K_means(K,col1,col2,col3);
 end
+
 
 %%% 3d case
 %K_means.Plot_2d_df(data)
