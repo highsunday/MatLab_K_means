@@ -4,7 +4,6 @@ classdef K_means < handle
         %k 分群個數 ; points:群心 ; cluster : 對群進行歸類
         k
         points
-        cluster
         axis_x
         axis_y
         axis_z
@@ -119,13 +118,7 @@ classdef K_means < handle
                         obj.points(i,3)=mean(data.z(tf));
                    end
                 end
-            end
-    end
-    methods (Static)
-         function Plot_3d_df(data)
-           plot3(data(:,1),data(:,2),data(:,3),'o')
-         end
-       
+             end
     end
 end
 
